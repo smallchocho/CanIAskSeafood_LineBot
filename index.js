@@ -1,8 +1,8 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
 const lineConfig = {
-    channelAccessToken: process.env.HEROKU_LINE_CHANNEL_ACCESS_TOKEN,
-    channelSecret: process.env.HEROKU_LINE_CHANNEL_SECRET
+    channelAccessToken: "uqQTw+29bxDlCYKmzocOx8ZpfvFuTT8OlsCaEtXc03k54BdSIUZvWz7HtfLBawI/WnLqxbi6aO0W0y8+10KjcrN8jEMZAguJSgFPBWRNGnKZ65whoKrLhYMG0RWVnIGVCTWB1MyIxrzvk8V9339A6wdB04t89/1O/w1cDnyilFU=",
+    channelSecret: "5c5fe089c4020a5e32a3861a201796a5Issue"
 };
 const client = new line.Client(lineConfig);
 const app = express();
