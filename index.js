@@ -11,49 +11,45 @@ app.listen(process.env.PORT || 3210, function() {
     console.log('App now running on port', this.address().port);
 });
 
-app.get('/', function(request, response) {
-    response.send('Hello World!');
+
+app.post('/', line.middleware(lineConfig), function(req, res) {
+    Promise
+        .all(req.body.events.map(handleEvent))
+        .then(function(result) {
+            res.json(result);
+        });
 });
 
 
-// app.post('/', line.middleware(lineConfig), function(req, res) {
-//     Promise
-//         .all(req.body.events.map(handleEvent))
-//         .then(function(result) {
-//             res.json(result);
-//         });
-// });
+function handleEvent(event) {
+    switch (event.type) {
+        case 'join':
+        case 'follow':
+            return client.replyMessage(event.replyToken, {
+                type: 'text',
+                text: '你好請問我們認識嗎?'
+            });
+        case 'message':
+            handleEventMessage(event)
+    }
+}
+function handleEventMessage(event){
+    switch (event.message.type) {
+        case 'text':
+            var source = event.source;
+            var targetId = source[source.type+'Id'];
+            return client.replyMessage(event.replyToken, {
+                type: 'text',
+                text: ('你是'+source.type)
+            }).then(function() {
+                return client.pushMessage(targetId, {
+                    type: 'text',
+                    text: ('使用'+source.type+'Id推送訊息')
+                });
+            });
+    }
 
-
-// function handleEvent(event) {
-//     switch (event.type) {
-//         case 'join':
-//         case 'follow':
-//             return client.replyMessage(event.replyToken, {
-//                 type: 'text',
-//                 text: '你好請問我們認識嗎?'
-//             });
-//         case 'message':
-//             handleEventMessage(event)
-//     }
-// }
-// function handleEventMessage(event){
-//     switch (event.message.type) {
-//         case 'text':
-//             var source = event.source;
-//             var targetId = source[source.type+'Id'];
-//             return client.replyMessage(event.replyToken, {
-//                 type: 'text',
-//                 text: ('你是'+source.type)
-//             }).then(function() {
-//                 return client.pushMessage(targetId, {
-//                     type: 'text',
-//                     text: ('使用'+source.type+'Id推送訊息')
-//                 });
-//             });
-//     }
-//
-// }
+}
 //
 // var express = require('express');
 //
