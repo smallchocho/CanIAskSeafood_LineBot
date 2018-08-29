@@ -11,13 +11,18 @@ app.listen(3210, function() {
     console.log('App now running on port', this.address().port);
 });
 
-app.post('/', line.middleware(lineConfig), function(req, res) {
-    Promise
-        .all(req.body.events.map(handleEvent))
-        .then(function(result) {
-            res.json(result);
-        });
+app.get('/', function(request, response) {
+    response.send('Hello World!');
 });
+
+
+// app.post('/', line.middleware(lineConfig), function(req, res) {
+//     Promise
+//         .all(req.body.events.map(handleEvent))
+//         .then(function(result) {
+//             res.json(result);
+//         });
+// });
 
 
 function handleEvent(event) {
