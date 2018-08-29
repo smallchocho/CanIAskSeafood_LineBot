@@ -11,13 +11,18 @@ app.listen(3210, function() {
     console.log('App now running on port', this.address().port);
 });
 
-app.post('/', line.middleware(lineConfig), function(req, res) {
-    Promise
-        .all(req.body.events.map(handleEvent))
-        .then(function(result) {
-            res.json(result);
-        });
+app.get('/', function(request, response) {
+    response.send('Hello World!');
 });
+
+
+// app.post('/', line.middleware(lineConfig), function(req, res) {
+//     Promise
+//         .all(req.body.events.map(handleEvent))
+//         .then(function(result) {
+//             res.json(result);
+//         });
+// });
 
 
 function handleEvent(event) {
@@ -29,12 +34,36 @@ function handleEvent(event) {
                 text: '你好請問我們認識嗎?'
             });
         case 'message':
-            switch (event.message.type) {
-                case 'text':
-                    return client.replyMessage(event.replyToken, {
-                        type: 'text',
-                        text: (event.message.text+'~*')
-                    });
-            }
+            handleEventMessage(event)
     }
 }
+function handleEventMessage(event){
+    switch (event.message.type) {
+        case 'text':
+            var source = event.source;
+            var targetId = source[source.type+'Id'];
+            return client.replyMessage(event.replyToken, {
+                type: 'text',
+                text: ('你是'+source.type)
+            }).then(function() {
+                return client.pushMessage(targetId, {
+                    type: 'text',
+                    text: ('使用'+source.type+'Id推送訊息')
+                });
+            });
+    }
+
+}
+
+// var express = require('express');
+//
+// var app = express();
+//
+// app.get('/', function(request, response) {
+//     response.send('Hello World!');
+// });
+//
+// var port = process.env.PORT || 3000;
+// app.listen(port, function() {
+//     console.log("Listening on " + port);
+// });
