@@ -11,22 +11,22 @@ app.listen(process.env.PORT || 3210, function() {
     console.log('App now running on port', this.address().port);
 });
 
-// app.post('/callBack', function (req, res) {
-//     let promise = new Promise(function (resolve,reject) {
-//         if (true){
-//             resolve()
-//         }
-//         reject()
-//     }).then(function () {
-//         const body = {status: {status: 'ok', statusCode: 200}, data: data};
-//         res.json(body);
-//     }).catch(function (e) {
-//         logger.error('get region fail:%s', e);
-//         const body = {status: {status: 'fail', statusCode: 1}};
-//         res.json(body);
-//     });
-//     promise
-// });
+app.post('/callBack', function (req, res) {
+    let promise = new Promise(function (resolve,reject) {
+        if (true){
+            resolve()
+        }
+        reject()
+    }).then(function () {
+        const body = {status: {status: 'ok', statusCode: 200}, data: data};
+        res.json(body);
+    }).catch(function (e) {
+        logger.error('get region fail:%s', e);
+        const body = {status: {status: 'fail', statusCode: 1}};
+        res.json(body);
+    });
+    promise
+});
 
 
 app.post('/', line.middleware(lineConfig), function(req, res) {
