@@ -1,7 +1,7 @@
 const line = require('@line/bot-sdk');
 const express = require('express');
 const lineConfig = {
-    channelAccessToken: "uqQTw+29bxDlCYKmzocOx8ZpfvFuTT8OlsCaEtXc03k54BdSIUZvWz7HtfLBawI/WnLqxbi6aO0W0y8+10KjcrN8jEMZAguJSgFPBWRNGnKZ65whoKrLhYMG0RWVnIGVCTWB1MyIxrzvk8V9339A6wdB04t89/1O/w1cDnyilFU=",
+    channelAccessToken: "cJ0QOtov5u0SlxEfU7ljYvDqWoqqDLlYS9FGs1faKa/3F86hJ8goon2P6cQdsgGUWnLqxbi6aO0W0y8+10KjcrN8jEMZAguJSgFPBWRNGnKstP9KuGeg/ThMsuYTwTteOQhJZszAIkFInmukOVFj+gdB04t89/1O/w1cDnyilFU=",
     channelSecret: "5c5fe089c4020a5e32a3861a201796a5Issue"
 };
 const client = new line.Client(lineConfig);
@@ -10,6 +10,23 @@ const app = express();
 app.listen(process.env.PORT || 3210, function() {
     console.log('App now running on port', this.address().port);
 });
+
+// app.post('/callBack', function (req, res) {
+//     let promise = new Promise(function (resolve,reject) {
+//         if (true){
+//             resolve()
+//         }
+//         reject()
+//     }).then(function () {
+//         const body = {status: {status: 'ok', statusCode: 200}, data: data};
+//         res.json(body);
+//     }).catch(function (e) {
+//         logger.error('get region fail:%s', e);
+//         const body = {status: {status: 'fail', statusCode: 1}};
+//         res.json(body);
+//     });
+//     promise
+// });
 
 
 app.post('/', line.middleware(lineConfig), function(req, res) {
