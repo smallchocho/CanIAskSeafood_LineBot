@@ -67,9 +67,8 @@
 //     }
 //
 // }
-#!/usr/bin/env node
 
-const linebot = require('@line/bot-sdk')
+const linebot = require('linebot')
 const express = require('express')
 
 const app = express()

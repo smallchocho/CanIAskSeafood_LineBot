@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "index.js": "^6.2.1",
+    "linebot": "^1.4.1",
     "express": "^4.16.3"
   }
 }
