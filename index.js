@@ -2,7 +2,7 @@ const line = require('@line/bot-sdk');
 const express = require('express');
 const lineConfig = {
     channelAccessToken: "cJ0QOtov5u0SlxEfU7ljYvDqWoqqDLlYS9FGs1faKa/3F86hJ8goon2P6cQdsgGUWnLqxbi6aO0W0y8+10KjcrN8jEMZAguJSgFPBWRNGnKstP9KuGeg/ThMsuYTwTteOQhJZszAIkFInmukOVFj+gdB04t89/1O/w1cDnyilFU=",
-    channelSecret: "5c5fe089c4020a5e32a3861a201796a5Issue"
+    channelSecret: "f879f7a437428ad3a8a388f855ea1565"
 };
 const client = new line.Client(lineConfig);
 const app = express();
