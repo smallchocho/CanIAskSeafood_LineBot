@@ -7,9 +7,7 @@ const lineConfig = {
 const client = new line.Client(lineConfig);
 const app = express();
 
-app.listen(process.env.PORT || 8080, function() {
-    console.log('App now running on port', this.address().port);
-});
+
 app.post('/', line.middleware(lineConfig), function(req, res) {
     Promise
         .all(req.body.events.map(handleEvent))
@@ -49,4 +47,6 @@ function handleEventMessage(event){
 
 }
 
-
+app.listen(process.env.PORT || 8080, function() {
+    console.log('App now running on port', this.address().port);
+});
