@@ -40,7 +40,7 @@ function handleEventMessage(event){
             var targetId = source[source.type+'Id'];
             return client.replyMessage(event.replyToken, {
                 type: 'text',
-                text: ('Hi,'+source.user.userId)
+                text: ('Hi,'+source.type)
             }).then(function() {
                 const quickreplyItems = [{
                     imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
