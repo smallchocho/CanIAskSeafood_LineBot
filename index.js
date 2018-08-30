@@ -48,7 +48,7 @@ function handleEventMessage(event){
                             items: [
                                 {
                                     type: "action", // ③
-                                    imageUrl: "http://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
+                                    imageUrl: "https://example.com/sushi.png",
                                     action: {
                                         type: "message",
                                         label: "Sushi",
