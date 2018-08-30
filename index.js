@@ -11,7 +11,7 @@ const app = express();
 app.post('/', line.middleware(lineConfig), function(req, res) {
     Promise
         .all(
-            req.body.events.map(handleEvent)]
+            req.body.events.map(handleEvent)
         )
         .then(function(result) {
             res.json(result);
