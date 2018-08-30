@@ -41,28 +41,32 @@ function handleEventMessage(event){
                 type: 'text',
                 text: ('你是'+source.type)
             }).then(function() {
-                return client.pushMessage(targetId, {
-                        type: "text", // ①
-                        text: "Select your favorite food category or send me your location!",
-                        quickReply: { // ②
-                            items: [
-                                {
-                                    type: "action", // ③
-                                    imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
-                                    action: {
-                                        type: "message",
-                                        label: "Sushi",
-                                        text: "Sushi"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                );
+                return client.pushMessage(targetId, showQuickReplys());
             });
     }
 
 }
+function showQuickReplys(){
+    const quickReplys = {
+        type: "text", // ①
+        text: "Select your favorite food category or send me your location!",
+        quickReply: { // ②
+            items: [
+                {
+                    type: "action", // ③
+                    imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
+                    action: {
+                        type: "message",
+                        label: "Sushi",
+                        text: "Sushi"
+                    }
+                }
+            ]
+        }
+    }
+    return quickReplys
+}
+
 
 app.listen(process.env.PORT || 8080, function() {
     console.log('App now running on port', this.address().port);
