@@ -39,7 +39,7 @@ function handleEventMessage(event){
             var targetId = source[source.type+'Id'];
             return client.replyMessage(event.replyToken, {
                 type: 'text',
-                text: ('你是'+source.type)
+                text: ('Hi,'+source.name)
             }).then(function() {
                 const quickreplyItems = [{
                     imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
@@ -50,7 +50,9 @@ function handleEventMessage(event){
             });
     }
 
+
 }
+
 function showQuickReplys(message,items){
     const quickReplys = {
         type: "text", // ①
@@ -73,7 +75,43 @@ function showQuickReplys(message,items){
         }
     }
     return quickReplys
+
 }
+/*showQuickReplys完整格式：
+ {
+  "type": "text", // ①
+  "text": "Select your favorite food category or send me your location!",
+  "quickReply": { // ②
+    "items": [
+      {
+        "type": "action", // ③
+        "imageUrl": "https://example.com/sushi.png",
+        "action": {
+          "type": "message",
+          "label": "Sushi",
+          "text": "Sushi"
+        }
+      },
+      {
+        "type": "action",
+        "imageUrl": "https://example.com/tempura.png",
+        "action": {
+          "type": "message",
+          "label": "Tempura",
+          "text": "Tempura"
+        }
+      },
+      {
+        "type": "action", // ④
+        "action": {
+          "type": "location",
+          "label": "Send location"
+        }
+      }
+    ]
+  }
+}
+    */
 
 
 app.listen(process.env.PORT || 8080, function() {
