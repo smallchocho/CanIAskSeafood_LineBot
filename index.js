@@ -19,9 +19,6 @@ app.post('/', line.middleware(lineConfig), function(req, res) {
         });
 });
 
-app.post("./",line.middleware(lineConfig),function (req,res) {
-    Promise.all(req.body.events.map())
-})
 
 function handleEvent(event) {
     switch (event.type) {
@@ -45,9 +42,23 @@ function handleEventMessage(event){
                 text: ('你是'+source.type)
             }).then(function() {
                 return client.pushMessage(targetId, {
-                    type: 'text',
-                    text: ('使用'+source.type+'Id推送訊息')
-                });
+                        type: "text", // ①
+                        text: "Select your favorite food category or send me your location!",
+                        quickReply: { // ②
+                            items: [
+                                {
+                                    type: "action", // ③
+                                    imageUrl: "https://example.com/sushi.png",
+                                    action: {
+                                        type: "message",
+                                        label: "Sushi",
+                                        text: "Sushi"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                );
             });
     }
 
