@@ -46,14 +46,14 @@ function handleEventMessage(event){
                     label:"測試喔",
                     text:"測試"
                 }]
-                return client.pushMessage(targetId, showQuickReplys("測試測試",quickreplyItems));
+                return client.pushMessage(targetId, createQuickReplys("測試測試",quickreplyItems));
             });
     }
 
 
 }
 
-function showQuickReplys(message,items){
+function createQuickReplys(message,items){
     const quickReplys = {
         type: "text", // ①
         text: message,
