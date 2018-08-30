@@ -41,27 +41,35 @@ function handleEventMessage(event){
                 type: 'text',
                 text: ('你是'+source.type)
             }).then(function() {
-                return client.pushMessage(targetId, showQuickReplys());
+                const quickreplyItems = [{
+                    imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
+                    label:"測試喔",
+                    text:"測試"
+                }]
+                return client.pushMessage(targetId, showQuickReplys("測試測試",quickreplyItems));
             });
     }
 
 }
-function showQuickReplys(){
+function showQuickReplys(message,items){
     const quickReplys = {
         type: "text", // ①
-        text: "Select your favorite food category or send me your location!",
+        text: message,
         quickReply: { // ②
-            items: [
-                {
-                    type: "action", // ③
-                    imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
-                    action: {
-                        type: "message",
-                        label: "Sushi",
-                        text: "Sushi"
-                    }
-                }
-            ]
+            items: [ ]
+        }
+    }
+
+    let i
+    for (i = 0; i < items.length; i++) {
+        quickReplys.quickReply.items[i] = {
+            type: "action", // ③
+            imageUrl: items[i].imageUrl,
+            action: {
+                type: "message",
+                label: items[i].label,
+                text: items[i].text
+            }
         }
     }
     return quickReplys
