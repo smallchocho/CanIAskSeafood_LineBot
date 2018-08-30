@@ -48,7 +48,7 @@ function handleEventMessage(event){
                             items: [
                                 {
                                     type: "action", // ③
-                                    imageUrl: "https://example.com/sushi.png",
+                                    imageUrl: "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwickteykpTdAhXUad4KHdNYAvUQjRx6BAgBEAU&url=https%3A%2F%2Fwww.vexels.com%2Fpng-svg%2Fpreview%2F143251%2Fsushi-color-icon&psig=AOvVaw1IDjhetr7Ep1wlJTek1Q18&ust=1535696760925301",
                                     action: {
                                         type: "message",
                                         label: "Sushi",
