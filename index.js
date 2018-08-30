@@ -11,7 +11,6 @@ const app = express();
 app.post('/', line.middleware(lineConfig), function(req, res) {
     Promise
         .all(
-            [console.log(req.body),
             req.body.events.map(handleEvent)]
         )
         .then(function(result) {
@@ -35,7 +34,7 @@ function handleEvent(event) {
 function handleEventMessage(event){
     switch (event.message.type) {
         case 'text':
-            // console.log(event.source)
+            console.log(event.source)
             var source = event.source;
             var targetId = source[source.type+'Id'];
             return client.replyMessage(event.replyToken, {
