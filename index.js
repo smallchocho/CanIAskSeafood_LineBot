@@ -10,12 +10,18 @@ const app = express();
 
 app.post('/', line.middleware(lineConfig), function(req, res) {
     Promise
-        .all(req.body.events.map(handleEvent))
+        .all(
+            console.log(req.body)
+            req.body.events.map(handleEvent)
+        )
         .then(function(result) {
             res.json(result);
         });
 });
 
+app.post("./",line.middleware(lineConfig),function (req,res) {
+    Promise.all(req.body.events.map())
+})
 
 function handleEvent(event) {
     switch (event.type) {
