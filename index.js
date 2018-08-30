@@ -35,11 +35,12 @@ function handleEvent(event) {
 function handleEventMessage(event){
     switch (event.message.type) {
         case 'text':
+            console.log(event.source)
             var source = event.source;
             var targetId = source[source.type+'Id'];
             return client.replyMessage(event.replyToken, {
                 type: 'text',
-                text: ('Hi,'+source.name)
+                text: ('Hi,'+source.user.userId)
             }).then(function() {
                 const quickreplyItems = [{
                     imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
