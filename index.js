@@ -46,7 +46,9 @@ function handleEventMessage(event){
                     label:"測試喔",
                     text:"測試"
                 }]
-                return client.pushMessage(targetId, createQuickReplys("測試測試",quickreplyItems));
+                const bubbles = [createFlexBubbleMessage(),createFlexBubbleMessage()]
+                const carouselMessage = createFlexCarouselMessage(bubbles)
+                return client.pushMessage(targetId, carouselMessage);
             });
     }
 
@@ -112,7 +114,130 @@ function createQuickReplys(message,items){
   }
 }
     */
+function createFlexBubbleMessage(){
+    const message = {
+                "type": "bubble",
+                "hero": {
+                    "type": "image",
+                    "url": "https://i.screenshot.net/woj4ksy",
+                    "size": "full",
+                    "aspectRatio": "20:13",
+                    "aspectMode": "cover",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://linecorp.com"
+                    }
+                },
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "md",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://linecorp.com"
+                    },
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "歡迎使用 iParking",
+                            "size": "sm",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": "這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字",
+                            "margin": "sm",
+                            "wrap": true,
+                            "color": "#aaaaaa",
+                            "size": "xxs"
+                        }
+                    ]
+                },
+                "footer":{
+                    "type":"box",
+                    "layout":"vertical",
+                    "spacing":"md",
+                    "contents":[
+                        {
+                            "type": "button",
+                            "style": "link",
+                            "color": "#1e79a9",
+                            "height": "sm",
+                            "action": {
+                                "type": "uri",
+                                "label": "支付設定",
+                                "uri": "https://linecorp.com"
+                            }
+                        },
+                        {
+                            "type": "button",
+                            "style": "link",
+                            "color": "#1e79a9",
+                            "height": "sm",
+                            "action": {
+                                "type": "uri",
+                                "label": "車牌設定",
+                                "uri": "https://linecorp.com"
+                            }
+                        },
+                        {
+                            "type": "button",
+                            "style": "link",
+                            "color": "#1e79a9",
+                            "height": "sm",
+                            "action": {
+                                "type": "uri",
+                                "label": "發票設定",
+                                "uri": "https://linecorp.com"
+                            }
+                        }
+                    ]
+                },
+                "styles": {
+                    "footer": {
+                        "separator": true,
+                        "separatorColor": "#95ceae"
+                    }
+                }
+            }
+    return message
+}
 
+function createFlexCarouselMessage(bubbles) {
+    const flexMessage = {
+        type: "flex",
+        altText: "This is a Flex Message",
+        contents: {
+            "type": "carousel",
+            "contents": bubbles
+        }
+    }
+    return flexMessage
+
+
+}
+
+//     {
+//         "type": "flex",
+//         "altText": "This is a Flex Message",
+//         "contents": {
+//             "type": "bubble",
+//             "body": {
+//                 "type": "box",
+//                 "layout": "horizontal",
+//                 "contents": [
+//                     {
+//                         "type": "text",
+//                         "text": "Hello,"
+//                     },
+//                     {
+//                         "type": "text",
+//                         "text": "World!"
+//                     }
+//                 ]
+//             }
+//         }
+//     }
 
 app.listen(process.env.PORT || 8080, function() {
     console.log('App now running on port', this.address().port);
