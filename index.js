@@ -39,7 +39,7 @@ function handleEventMessage(event){
             var targetId = source[source.type+'Id'];
             return client.replyMessage(event.replyToken, {
                 type: 'text',
-                text: ('Hi,'+source.type)
+                text: ('Hi,歡迎使用iParking')
             }).then(function() {
                 const quickreplyItems = [{
                     imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
@@ -48,7 +48,7 @@ function handleEventMessage(event){
                 }]
                 const bubbles = [createFlexBubbleMessage(),createFlexBubbleMessage()]
                 const carouselMessage = createFlexCarouselMessage(bubbles)
-                return client.pushMessage(targetId, carouselMessage);
+                return client.pushMessage(targetId, createConfirmTemplateMessage("請問你要付款嗎？","確定","取消"));
             });
     }
 
@@ -213,31 +213,32 @@ function createFlexCarouselMessage(bubbles) {
         }
     }
     return flexMessage
-
-
 }
 
-//     {
-//         "type": "flex",
-//         "altText": "This is a Flex Message",
-//         "contents": {
-//             "type": "bubble",
-//             "body": {
-//                 "type": "box",
-//                 "layout": "horizontal",
-//                 "contents": [
-//                     {
-//                         "type": "text",
-//                         "text": "Hello,"
-//                     },
-//                     {
-//                         "type": "text",
-//                         "text": "World!"
-//                     }
-//                 ]
-//             }
-//         }
-//     }
+function createConfirmTemplateMessage(title,yesTitle = "確定",noTitle = "取消",yesAction = "aaaaa",noAction = "cccccccc"){
+    let message = {
+        "type": "template",
+        "altText": "this is a confirm template",
+        "template": {
+            "type": "confirm",
+            "text": title,
+            "actions": [
+                {
+                    "type": "message",
+                    "label": yesTitle,
+                    "text": yesAction
+                },
+                {
+                    "type": "message",
+                    "label": noTitle,
+                    "text": noAction
+                }
+            ]
+        }
+    }
+    return message
+}
+
 
 app.listen(process.env.PORT || 8080, function() {
     console.log('App now running on port', this.address().port);
