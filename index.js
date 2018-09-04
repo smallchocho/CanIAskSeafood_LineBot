@@ -49,8 +49,19 @@ function handleEventMessage(event){
                 const bubbles = [createFlexBubbleMessage(),createFlexBubbleMessage()]
                 const carouselMessage = createFlexCarouselMessage(bubbles)
                 const parkingBubble = createParkingPlateBubble(false,"2018.07.09 09:00","ABD-0133","建國高架H站")
-                const billTicketBubble = createBillTiketBubble(2000,500,"discountInfoArray","2018.07.09 09:00","2018.07.10 10:00","ABD-0133","市政府轉運站大樓站")
-                return client.pushMessage(targetId, createFlexCarouselMessage([billTicketBubble]));
+                const discountInfoArray = [
+                    {
+                        name : "台新優惠：2201（1.0 小時）",
+                        amount:"- 10"
+                    },
+                    {
+                        name:"台新紅利：2201（1.0 小時）",
+                        amount:"- 20"
+                    }
+                ]
+                const billTicketBubble = createBillTiketBubble(2000,500,discountInfoArray,"2018.07.09 09:00","2019.07.09 09:00","ABD-0133","市政府轉運站大樓站")
+                const imageMapMassage = createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg",2.145)
+                return client.pushMessage(targetId, imageMapMassage);
             });
     }
 
@@ -81,41 +92,9 @@ function createQuickReplys(message,items){
     return quickReplys
 
 }
-/*showQuickReplys完整格式：
- {
-  "type": "text", // ①
-  "text": "Select your favorite food category or send me your location!",
-  "quickReply": { // ②
-    "items": [
-      {
-        "type": "action", // ③
-        "imageUrl": "https://example.com/sushi.png",
-        "action": {
-          "type": "message",
-          "label": "Sushi",
-          "text": "Sushi"
-        }
-      },
-      {
-        "type": "action",
-        "imageUrl": "https://example.com/tempura.png",
-        "action": {
-          "type": "message",
-          "label": "Tempura",
-          "text": "Tempura"
-        }
-      },
-      {
-        "type": "action", // ④
-        "action": {
-          "type": "location",
-          "label": "Send location"
-        }
-      }
-    ]
-  }
-}
-    */
+
+
+//basic
 function createFlexBubbleMessage(){
     const flexBubbleMessage = {
         type: "flex",
@@ -210,7 +189,7 @@ function createFlexBubbleMessage(){
 }
 
 function createFlexCarouselMessage(bubbles) {
-    const flexMessage = {
+    const flexCarouselMessage = {
         type: "flex",
         altText: "This is a Flex Message",
         contents: {
@@ -218,7 +197,7 @@ function createFlexCarouselMessage(bubbles) {
             "contents": bubbles
         }
     }
-    return flexMessage
+    return flexCarouselMessage
 }
 
 function createConfirmTemplateMessage(title,yesTitle = "確定",noTitle = "取消",yesAction = "aaaaa",noAction = "cccccccc"){
@@ -245,6 +224,44 @@ function createConfirmTemplateMessage(title,yesTitle = "確定",noTitle = "取�
     return message
 }
 
+function createImageMapMessage(imgUrl,aspectRatio,actions = []){
+    const imageMapMessage = {
+        "type": "imagemap",
+        "baseUrl": imgUrl,
+        "altText": "This is an imagemap",
+        "baseSize": {
+            "height": 1040/aspectRatio,
+            "width": 1040
+        },
+        "actions": actions
+        // "actions": [
+        //     {
+        //         "type": "uri",
+        //         "linkUri": "https://google.com/",
+        //         "area": {
+        //             "x": 0,
+        //             "y": 0,
+        //             "width": 520,
+        //             "height": 1040
+        //         }
+        //     },
+        //     {
+        //         "type": "message",
+        //         "text": "Hello",
+        //         "area": {
+        //             "x": 520,
+        //             "y": 0,
+        //             "width": 520,
+        //             "height": 1040
+        //         }
+        //     }
+        // ]
+    }
+    return imageMapMessage
+}
+
+
+//iParking Custom
 function createParkingPlateBubble(isEntrance,time,plate,lotName){
     const bubble = {
         "type": "bubble",
@@ -318,7 +335,34 @@ function createParkingPlateBubble(isEntrance,time,plate,lotName){
     }
     return bubble
 }
+
 function createBillTiketBubble(fee,totalFee,discountInfoArray,startTime,endTime,plate,lotName){
+
+    const discountBubbleArray = [ ]
+    // let i
+    for (i = 0;i < discountInfoArray.length;i++){
+        const discountItem = {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+            {
+                "type": "text",
+                "text": discountInfoArray[i].name,
+                "size": "xxs",
+                "color": "#518785",
+                "flex": 0
+            },
+            {
+                "type": "text",
+                "text": discountInfoArray[i].amount +" 元",
+                "size": "xxs",
+                "color": "#518785",
+                "align": "end"
+            }
+        ]
+        }
+        discountBubbleArray[i] = discountItem
+    }
     const billTiketBubble = {
         "type": "bubble",
         "body": {
@@ -394,44 +438,11 @@ function createBillTiketBubble(fee,totalFee,discountInfoArray,startTime,endTime,
                         },
                         {
                             "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": "台新優惠：2201（1.0 小時）",
-                                    "size": "xxs",
-                                    "color": "#518785",
-                                    "flex": 0
-                                },
-                                {
-                                    "type": "text",
-                                    "text": "- 100 元",
-                                    "size": "xxs",
-                                    "color": "#518785",
-                                    "align": "end"
-                                }
-                            ]
+                            "layout": "vertical",
+                            "spacing": "sm",
+                            "contents": discountBubbleArray
                         },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": "台新紅利：2201（1.0 小時）",
-                                    "size": "xxs",
-                                    "color": "#518785",
-                                    "flex": 0
-                                },
-                                {
-                                    "type": "text",
-                                    "text": "- 20 元",
-                                    "size": "xxs",
-                                    "color": "#518785",
-                                    "align": "end"
-                                }
-                            ]
-                        },
+
                         {
                             "type": "separator",
                             "margin": "xl"
