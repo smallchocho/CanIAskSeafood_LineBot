@@ -75,7 +75,7 @@ function handleEventMessage(event){
 
                 const privacyBuble = utilties.createConfirmBubble("使用者條款","這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字","隱私權暨個人資料保護政策","我同意",action1,action2)
                 const privacyMessage =  utilties.createFlexCarouselMessage([privacyBuble])
-                return client.pushMessage(targetId, privacyMessage);
+                return client.pushMessage(targetId, utilties.createWelcomToSettingMessage());
             });
     }
 

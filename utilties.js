@@ -478,7 +478,103 @@ function createBillTiketBubble(fee, totalFee, discountInfoArray, startTime, endT
     return billTiketBubble
 }
 
-
+function createWelcomToSettingMessage() {
+    const message = {
+        "type":"flex",
+        "altText": "This is a Flex Message",
+        "contents":
+            {
+                "type": "bubble",
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "lg",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "歡迎使用 iParking",
+                            "size": "lg",
+                            "color": "#2c2c2c",
+                            "align":"start"
+                        },
+                        {
+                            "type": "text",
+                            "text": "iParking 可以讓您不用排隊、不用揮汗如雨，輕輕鬆鬆完成停車繳費。",
+                            "size": "md",
+                            "color": "#2c2c2c",
+                            "align":"center"
+                        },
+                        {
+                            "type": "text",
+                            "text": "請點此前往完成 >>>>>>",
+                            "size": "md",
+                            "color": "#1e79a9",
+                            "align":"start",
+                            "action": {
+                                "type": "uri",
+                                "uri": "https://www.google.com"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": "1. 手機認證",
+                            "margin":"sm",
+                            "size": "md",
+                            "color": "#2c2c2c",
+                            "align":"start",
+                            "action": {
+                                "type": "uri",
+                                "uri": "https://www.google.com"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": "2. 支付與發票設定",
+                            "margin":"xs",
+                            "size": "md",
+                            "color": "#2c2c2c",
+                            "align":"start",
+                            "action": {
+                                "type": "uri",
+                                "uri": "https://www.google.com"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": "3. 車牌綁定",
+                            "margin":"xs",
+                            "size": "md",
+                            "color": "#2c2c2c",
+                            "align":"start",
+                            "action": {
+                                "type": "uri",
+                                "uri": "https://www.google.com"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": "即可開始使用我們的服務喔～",
+                            "margin":"sm",
+                            "size": "md",
+                            "color": "#2c2c2c",
+                            "align":"start",
+                            "action": {
+                                "type": "uri",
+                                "uri": "https://www.google.com"
+                            }
+                        }
+                    ]
+                },
+                "styles": {
+                    "body": {
+                        "separator": true,
+                        "separatorColor": "#4ea1a1"
+                    }
+                }
+            }
+    }
+    return message
+}
 
 module.exports = {
     createQuickReplys,
@@ -488,7 +584,8 @@ module.exports = {
     createConfirmBubble,
     createImageMapMessage,
     createParkingPlateBubble,
-    createBillTiketBubble
+    createBillTiketBubble,
+    createWelcomToSettingMessage
 }
 
 
