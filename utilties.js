@@ -1,5 +1,3 @@
-
-
 //basic
 function createQuickReplys(message, items) {
     const quickReplys = {
@@ -424,6 +422,61 @@ function createBillTiketBubble(fee, totalFee, discountInfoArray, startTime, endT
     return billTiketBubble
 }
 
+function createConfirmBubble(title, body, yesTitle, noTitle, yesAction, noAction) {
+    const message = {
+        "type": "bubble",
+        "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": title,
+                    "size": "lg",
+                    "weight": "bold"
+                },
+                {
+                    "type": "text",
+                    "text": body,
+                    "margin": "xs",
+                    "wrap": true,
+                    "color": "#aaaaaa",
+                    "size": "md"
+                }
+            ]
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "lg",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": yesTitle,
+                    "size": "md",
+                    "color": "#1e79a9",
+                    "align":"center",
+                    "action": yesAction
+                },
+                {
+                    "type": "text",
+                    "text": noTitle,
+                    "size": "md",
+                    "color": "#1e79a9",
+                    "align":"center",
+                    "action": noAction
+                }
+            ]
+        },
+        "styles": {
+            "body": {
+                "separator": true,
+                "separatorColor": "#4ea1a1"
+            }
+        }
+    }
+    return message
+}
 
 module.exports = {
     createQuickReplys,
@@ -432,5 +485,8 @@ module.exports = {
     createConfirmTemplateMessage,
     createImageMapMessage,
     createParkingPlateBubble,
-    createBillTiketBubble
+    createBillTiketBubble,
+    createConfirmBubble
 }
+
+

@@ -33,6 +33,7 @@ function handleEvent(event) {
             handleEventMessage(event)
     }
 }
+
 function handleEventMessage(event){
     switch (event.message.type) {
         case 'text':
@@ -63,7 +64,18 @@ function handleEventMessage(event){
                 ]
                 const billTicketBubble = utilties.createBillTiketBubble(2000,500,discountInfoArray,"2018.07.09 09:00","2019.07.09 09:00","ABD-0133","市政府轉運站大樓站")
                 const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg",2.145)
-                return client.pushMessage(targetId, imageMapMassage);
+                const action1 = {
+                    "type": "uri",
+                    "uri": "https://www.google.com"
+                }
+                const action2 = {
+                    "type": "uri",
+                    "uri": "https://www.google.com"
+                }
+
+                const privacyBuble = utilties.createConfirmBubble("使用者條款","這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字","隱私權暨個人資料保護政策","我同意",action1,action2)
+                const privacyMessage =  utilties.createFlexCarouselMessage([privacyBuble])
+                return client.pushMessage(targetId, privacyMessage);
             });
     }
 
