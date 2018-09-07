@@ -24,64 +24,86 @@ app.post('/', line.middleware(lineConfig), function(req, res) {
 function handleEvent(event) {
     switch (event.type) {
         case 'join':
+            break
         case 'follow':
-            return client.replyMessage(event.replyToken, {
-                type: 'text',
-                text: '你好請問我們認識嗎?'
-            });
+            handleFirstFollowEventMessage(event)
+            break
         case 'message':
             handleEventMessage(event)
+            break
+        case 'postback':
+            handlePostbackEventMessage(event)
+            break
     }
+}
+
+// function handleFirstJoinEventMessage(event) {
+//     const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg",2.145)
+//     const action1 = {
+//         "type": "uri",
+//         "uri": "https://www.findata.com.tw/webview/privacy"
+//     }
+//     const action2 = {
+//         "type": "uri",
+//         "uri": "https://www.google.com"
+//     }
+//     const privacyBuble = utilties.createConfirmBubble("使用者條款","這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字","隱私權暨個人資料保護政策","我同意",action1,action2)
+//     const privacyMessage =  utilties.createFlexCarouselMessage([privacyBuble])
+//     return client.replyMessage(event.replyToken,[imageMapMassage,privacyMessage]);
+// }
+
+function handleFirstFollowEventMessage(event) {
+    const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg",2.145)
+    const action1 = {
+        "type": "uri",
+        "uri": "https://www.findata.com.tw/webview/privacy"
+    }
+    const action2 = {
+        "type": "uri",
+        "uri": "https://www.google.com"
+    }
+    const privacyBuble = utilties.createConfirmBubble("使用者條款","這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字","隱私權暨個人資料保護政策","我同意",action1,action2)
+    const privacyMessage =  utilties.createFlexCarouselMessage([privacyBuble])
+    return client.replyMessage(event.replyToken,[imageMapMassage,privacyMessage]);
 }
 
 function handleEventMessage(event){
     switch (event.message.type) {
         case 'text':
-            console.log(event.source)
+            console.log(event.message.text)
             var source = event.source;
             var targetId = source[source.type+'Id'];
-            return client.replyMessage(event.replyToken, {
-                type: 'text',
-                text: ('Hi,歡迎使用iParking')
-            }).then(function() {
-                const quickreplyItems = [{
-                    imageUrl: "https://www.sushiexpress.com.hk/wp-content/uploads/B02.png",
-                    label:"測試喔",
-                    text:"測試"
-                }]
-                const bubbles = [utilties.createFlexBubbleMessage(),utilties.createFlexBubbleMessage()]
-                const carouselMessage = utilties.createFlexCarouselMessage(bubbles)
-                const parkingBubble = utilties.createParkingPlateBubble(false,"2018.07.09 09:00","ABD-0133","建國高架H站")
-                const discountInfoArray = [
-                    {
-                        name : "台新優惠：2201（1.0 小時）",
-                        amount:"- 10"
-                    },
-                    {
-                        name:"台新紅利：2201（1.0 小時）",
-                        amount:"- 20"
-                    }
-                ]
-                const billTicketBubble = utilties.createBillTiketBubble(2000,500,discountInfoArray,"2018.07.09 09:00","2019.07.09 09:00","ABD-0133","市政府轉運站大樓站")
-                const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg",2.145)
-                const action1 = {
-                    "type": "uri",
-                    "uri": "https://www.google.com"
-                }
-                const action2 = {
-                    "type": "uri",
-                    "uri": "https://www.google.com"
-                }
-
-                const privacyBuble = utilties.createConfirmBubble("使用者條款","這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字","隱私權暨個人資料保護政策","我同意",action1,action2)
-                const privacyMessage =  utilties.createFlexCarouselMessage([privacyBuble])
-                return client.pushMessage(targetId, utilties.createWelcomToSettingMessage());
-            });
+            const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg", 2.145)
+            const action1 = {
+                "type": "uri",
+                "uri": "https://www.google.com"
+            }
+            const action2 = {
+                "type":"postback",
+                "label":"Buy",
+                "data":"action=buy&itemid=111"
+            }
+            const privacyBubble = utilties.createConfirmBubble("使用者條款", "這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字", "隱私權暨個人資料保護政策", "我同意", action1, action2)
+            const privacyMessage = utilties.createFlexCarouselMessage([privacyBubble])
+            return client.replyMessage(event.replyToken, [utilties.createFlexBubbleMessage(utilties.createWelcomeToSettingBubble()),imageMapMassage,privacyMessage])
     }
-
-
 }
 
+function handlePostbackEventMessage(event) {
+    const imageMapMassage = utilties.createImageMapMessage("https://news.cts.com.tw/photo/cts/201612/201612071828599_l.jpg", 2.145)
+    const action1 = {
+        "type": "uri",
+        "uri": "https://www.google.com"
+    }
+    const action2 = {
+        "type": "postback",
+        "label": "Buy",
+        "data": "action=buy&itemid=111"
+    }
+    const privacyBuble = utilties.createConfirmBubble("使用者條款", "這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字", "隱私權暨個人資料保護政策", "我同意", action1, action2)
+    const privacyMessage = utilties.createFlexCarouselMessage([privacyBuble])
+    return client.replyMessage(event.replyToken, [utilties.createFlexBubbleMessage(utilties.createWelcomeToSettingBubble()), imageMapMassage, privacyMessage])
+}
 
 app.listen(process.env.PORT || 8080, function() {
     console.log('App now running on port', this.address().port);

@@ -24,95 +24,11 @@ function createQuickReplys(message, items) {
 
 }
 
-function createFlexBubbleMessage() {
+function createFlexBubbleMessage(bubble) {
     const flexBubbleMessage = {
         type: "flex",
         altText: "This is a Flex Message",
-        contents: {
-            "type": "bubble",
-            "hero": {
-                "type": "image",
-                "url": "https://i.screenshot.net/woj4ksy",
-                "size": "full",
-                "aspectRatio": "20:13",
-                "aspectMode": "cover",
-                "action": {
-                    "type": "uri",
-                    "uri": "https://linecorp.com"
-                }
-            },
-            "body": {
-                "type": "box",
-                "layout": "vertical",
-                "spacing": "md",
-                "action": {
-                    "type": "uri",
-                    "uri": "https://linecorp.com"
-                },
-                "contents": [
-                    {
-                        "type": "text",
-                        "text": "歡迎使用 iParking",
-                        "size": "sm",
-                        "weight": "bold"
-                    },
-                    {
-                        "type": "text",
-                        "text": "這裡是說明文字這裡是說明文字這裡是說明文字這裡是說明文字",
-                        "margin": "sm",
-                        "wrap": true,
-                        "color": "#aaaaaa",
-                        "size": "xxs"
-                    }
-                ]
-            },
-            "footer": {
-                "type": "box",
-                "layout": "vertical",
-                "spacing": "md",
-                "contents": [
-                    {
-                        "type": "button",
-                        "style": "link",
-                        "color": "#1e79a9",
-                        "height": "sm",
-                        "action": {
-                            "type": "uri",
-                            "label": "支付設定",
-                            "uri": "https://linecorp.com"
-                        }
-                    },
-                    {
-                        "type": "button",
-                        "style": "link",
-                        "color": "#1e79a9",
-                        "height": "sm",
-                        "action": {
-                            "type": "uri",
-                            "label": "車牌設定",
-                            "uri": "https://linecorp.com"
-                        }
-                    },
-                    {
-                        "type": "button",
-                        "style": "link",
-                        "color": "#1e79a9",
-                        "height": "sm",
-                        "action": {
-                            "type": "uri",
-                            "label": "發票設定",
-                            "uri": "https://linecorp.com"
-                        }
-                    }
-                ]
-            },
-            "styles": {
-                "footer": {
-                    "separator": true,
-                    "separatorColor": "#95ceae"
-                }
-            }
-        }
+        contents: bubble
     }
     return flexBubbleMessage
 }
@@ -129,27 +45,22 @@ function createFlexCarouselMessage(bubbles) {
     return flexCarouselMessage
 }
 
-function createConfirmTemplateMessage(title, yesTitle = "確定", noTitle = "取消", yesAction = "aaaaa", noAction = "cccccccc") {
+function createConfirmTemplateMessage(title,actions = []) {
     let message = {
         "type": "template",
         "altText": "this is a confirm template",
         "template": {
             "type": "confirm",
             "text": title,
-            "actions": [
-                {
-                    "type": "message",
-                    "label": yesTitle,
-                    "text": yesAction
-                },
-                {
-                    "type": "message",
-                    "label": noTitle,
-                    "text": noAction
-                }
-            ]
+            "actions": actions
         }
     }
+    // action example:
+    // {
+    //         "type": "message",
+    //         "label": "確定"
+    //         "text": yesActionText
+    // }
     return message
 }
 
@@ -186,7 +97,7 @@ function createConfirmBubble(title, body, yesTitle, noTitle, yesAction, noAction
                     "text": yesTitle,
                     "size": "md",
                     "color": "#1e79a9",
-                    "align":"center",
+                    "align": "center",
                     "action": yesAction
                 },
                 {
@@ -194,7 +105,7 @@ function createConfirmBubble(title, body, yesTitle, noTitle, yesAction, noAction
                     "text": noTitle,
                     "size": "md",
                     "color": "#1e79a9",
-                    "align":"center",
+                    "align": "center",
                     "action": noAction
                 }
             ]
@@ -207,6 +118,12 @@ function createConfirmBubble(title, body, yesTitle, noTitle, yesAction, noAction
         }
     }
     return message
+    // action example:
+    // {
+    //         "type": "message",
+    //         "label": "確定"
+    //         "text": yesActionText
+    // }
 }
 
 function createImageMapMessage(imgUrl, aspectRatio, actions = []) {
@@ -478,102 +395,98 @@ function createBillTiketBubble(fee, totalFee, discountInfoArray, startTime, endT
     return billTiketBubble
 }
 
-function createWelcomToSettingMessage() {
-    const message = {
-        "type":"flex",
-        "altText": "This is a Flex Message",
-        "contents":
-            {
-                "type": "bubble",
-                "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "spacing": "lg",
-                    "contents": [
-                        {
-                            "type": "text",
-                            "text": "歡迎使用 iParking",
-                            "size": "lg",
-                            "color": "#2c2c2c",
-                            "align":"start"
-                        },
-                        {
-                            "type": "text",
-                            "text": "iParking 可以讓您不用排隊、不用揮汗如雨，輕輕鬆鬆完成停車繳費。",
-                            "size": "md",
-                            "color": "#2c2c2c",
-                            "align":"center"
-                        },
-                        {
-                            "type": "text",
-                            "text": "請點此前往完成 >>>>>>",
-                            "size": "md",
-                            "color": "#1e79a9",
-                            "align":"start",
-                            "action": {
-                                "type": "uri",
-                                "uri": "https://www.google.com"
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": "1. 手機認證",
-                            "margin":"sm",
-                            "size": "md",
-                            "color": "#2c2c2c",
-                            "align":"start",
-                            "action": {
-                                "type": "uri",
-                                "uri": "https://www.google.com"
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": "2. 支付與發票設定",
-                            "margin":"xs",
-                            "size": "md",
-                            "color": "#2c2c2c",
-                            "align":"start",
-                            "action": {
-                                "type": "uri",
-                                "uri": "https://www.google.com"
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": "3. 車牌綁定",
-                            "margin":"xs",
-                            "size": "md",
-                            "color": "#2c2c2c",
-                            "align":"start",
-                            "action": {
-                                "type": "uri",
-                                "uri": "https://www.google.com"
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": "即可開始使用我們的服務喔～",
-                            "margin":"sm",
-                            "size": "md",
-                            "color": "#2c2c2c",
-                            "align":"start",
-                            "action": {
-                                "type": "uri",
-                                "uri": "https://www.google.com"
-                            }
-                        }
-                    ]
+function createWelcomeToSettingBubble() {
+    const bubble = {
+        "type": "bubble",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "lg",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "歡迎使用 iParking",
+                    "size": "lg",
+                    "color": "#2c2c2c",
+                    "align":"start"
                 },
-                "styles": {
-                    "body": {
-                        "separator": true,
-                        "separatorColor": "#4ea1a1"
+                {
+                    "type": "text",
+                    "text": "iParking 可以讓您不用排隊、不用揮汗如雨，輕輕鬆鬆完成停車繳費。",
+                    "wrap":true,
+                    "size": "md",
+                    "color": "#2c2c2c",
+                    "align":"start"
+                },
+                {
+                    "type": "text",
+                    "text": "請點此前往完成 >>>>>>",
+                    "size": "md",
+                    "color": "#1e79a9",
+                    "align":"start",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "1. 手機認證",
+                    "margin":"sm",
+                    "size": "md",
+                    "color": "#2c2c2c",
+                    "align":"start",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "2. 支付與發票設定",
+                    "margin":"xs",
+                    "size": "md",
+                    "color": "#2c2c2c",
+                    "align":"start",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "3. 車牌綁定",
+                    "margin":"xs",
+                    "size": "md",
+                    "color": "#2c2c2c",
+                    "align":"start",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "即可開始使用我們的服務喔～",
+                    "margin":"sm",
+                    "size": "md",
+                    "color": "#2c2c2c",
+                    "align":"start",
+                    "action": {
+                        "type": "uri",
+                        "uri": "https://www.google.com"
                     }
                 }
+            ]
+        },
+        "styles": {
+            "body": {
+                "separator": true,
+                "separatorColor": "#4ea1a1"
             }
+        }
     }
-    return message
+    return bubble
 }
 
 module.exports = {
@@ -585,7 +498,7 @@ module.exports = {
     createImageMapMessage,
     createParkingPlateBubble,
     createBillTiketBubble,
-    createWelcomToSettingMessage
+    createWelcomeToSettingBubble
 }
 
 
