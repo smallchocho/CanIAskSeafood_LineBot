@@ -1,3 +1,18 @@
+
+//tool
+function getParatemeterToObject(queryString){
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = queryString,
+        urlParams = {};
+    while (match = search.exec(query))
+        urlParams[decode(match[1])] = decode(match[2]);
+    return urlParams
+}
+
+
 //basic
 function createQuickReplys(message, items) {
     const quickReplys = {
@@ -160,6 +175,14 @@ function createImageMapMessage(imgUrl, aspectRatio, actions = []) {
         // ]
     }
     return imageMapMessage
+}
+
+function createOnlyTextMessage(text){
+    const message = {
+        "type": "text",
+        "text": text
+    }
+    return message
 }
 
 
@@ -490,12 +513,14 @@ function createWelcomeToSettingBubble() {
 }
 
 module.exports = {
+    getParatemeterToObject,
     createQuickReplys,
     createFlexBubbleMessage,
     createFlexCarouselMessage,
     createConfirmTemplateMessage,
     createConfirmBubble,
     createImageMapMessage,
+    createOnlyTextMessage,
     createParkingPlateBubble,
     createBillTiketBubble,
     createWelcomeToSettingBubble
